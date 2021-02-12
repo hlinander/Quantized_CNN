@@ -57,10 +57,10 @@ pams['arrange'] = np.arange(48).reshape((3, 16)).transpose().flatten()
 model_name = 'full_0'
 model = tf.keras.models.load_model('models/{}/model_best.h5'.format(model_name),custom_objects={'PruneLowMagnitude': pruning_wrapper.PruneLowMagnitude,'QDense': QDense, 'QConv2D': QConv2D, 'Clip': Clip, 'QActivation': QActivation})
 model.summary()
-# print("Q model summary:")
-# print_qmodel_summary(model)
-# print("Q dictionary:")
-# print(get_quantization_dictionary(model))
+print("Q model summary:")
+print_qmodel_summary(model)
+print("Q dictionary:")
+print(get_quantization_dictionary(model))
 
 with open('run_config.json', 'r') as f:
     run_config = json.load(f)
@@ -84,9 +84,8 @@ flops = get_flops(model, batch_size=1)
 print(f"FLOPS: {flops / 10 ** 9:.03} G")
 
 
-
 q = run_qtools.QTools(model, process="horowitz", source_quantizers=[quantized_bits(16, 6, 1)], is_inference=False, weights_path=None,keras_quantizer="fp32",keras_accumulator="fp32", for_reference=False)
-# q.qtools_stats_print()
+q.qtools_stats_print()
 
 # caculate energy of the derived data type map.
 energy_dict = q.pe(
