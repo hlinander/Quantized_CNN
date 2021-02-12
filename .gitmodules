@@ -1,3 +1,0 @@
-[submodule "qkeras"]
-	path = qkeras
-	url = https://github.com/google/qkeras.git
