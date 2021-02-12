@@ -18,12 +18,12 @@ if __name__ == "__main__":
   parser.add_option('-e','--extra' ,action='store',type='string',dest='extra' ,default='', help='model')
   parser.add_option('-n','--names' ,action='store',type='string',dest='names' ,default='float', help='model name')
   parser.add_option('-k','--kfolds',action='store', type='int', dest='kfolds', default=10, help='Number of folds')
-  arser.add_option('--pruned',action='store', type='bool', dest='addPruned', default=False, help='plot pruned and unpruned')
+  parser.add_option('--pruned',     action="store_true", dest='addPruned', default=False, help='plot pruned and unpruned')
   (options,args) = parser.parse_args()
   
   print(" Run with:")
   # print("python3 trainingDiagnostics.py -m 'models/pruned_quant_1bit;models/pruned_quant_2bit;models/pruned_quant_3bit;models/pruned_quant_4bit;models/pruned_quant_6bit;models/pruned_quant_8bit;models/pruned_quant_10bit;models/pruned_quant_12bit;models/pruned_quant_14bit;models/pruned_quant_16bit;models/pruned_bayesian_v2_best_boosted;models/pruned_full' --names 'B;T;3;4;6;8;10;12;14;16;AQP;BP' --prefix 'quantized_pruned' --extra 'Pruned (50% sparsity)'")
-  print('To plot all models as in papr draft (must have trained pruned and unpruned:'))
+  print('To plot all models as in papr draft (must have trained pruned and unpruned:')
   print("python3 trainingDiagnostics.py -m 'models/quant_1bit;models/quant_2bit;models/quant_3bit;models/quant_4bit;models/quant_6bit;models/quant_8bit;models/quant_10bit;models/quant_12bit;models/quant_14bit;models/quant_16bit;models/bayesian_v2_best_boosted;models/full' --names 'B;T;3;4;6;8;10;12;14;16;AQ;BF' --prefix 'quantized' --extra '' --pruned")
   models = [str(f) for f in options.models.split(';')]
   names  = [str(f) for f in options.names.split(';')]

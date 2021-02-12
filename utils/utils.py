@@ -1,6 +1,6 @@
 from __future__ import print_function
 import numpy as np
-import sys, os, yaml
+import sys, os
 from optparse import OptionParser
 import json
 import cv2
@@ -65,7 +65,8 @@ mpl.rcParams["xtick.minor.top"] =  False
 mpl.rcParams["xtick.minor.bottom"] =  False
 mpl.rcParams["xtick.minor.visible"] =  False
 
-ds_train_ = tfds.load(name='svhn_cropped', split="train", batch_size=-1, data_dir='/afs/cern.ch/user/t/thaarres/tensorflow_datasets/')
+#ds_train_ = tfds.load(name='svhn_cropped', split="train", batch_size=-1, data_dir='/afs/cern.ch/user/t/thaarres/tensorflow_datasets/')
+ds_train_ = tfds.load(name='svhn_cropped', split="train", batch_size=-1)
 dataset_ = tfds.as_numpy(ds_train_)
 x_train_, y_train_ = dataset_["image"].astype(np.float32), dataset_["label"]
 

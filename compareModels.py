@@ -17,7 +17,7 @@ K.set_image_data_format('channels_last')
 import h5py
 import math
 import matplotlib.pyplot as plt
-from hls4ml.model.profiling import numerical
+
 print("Importing private libraries")
 import models
 from utils.utils import preprocess,add_logo
@@ -42,6 +42,7 @@ colors  = ['#67001f','#b2182b','#d6604d','#f4a582','#fddbc7','#d1e5f0','#92c5de'
 # colors  = ['#8e0152','#c51b7d','#de77ae','#f1b6da','#fde0ef','#e6f5d0','#b8e186','#7fbc41','#4d9221','#276419']
 # colors  = ['#543005','#8c510a','#bf812d','#dfc27d','#f6e8c3','#c7eae5','#80cdc1','#35978f','#01665e','#003c30']
 from qkeras import QConv2D, QDense, Clip, QActivation, QInitializer, quantized_bits
+
 def doOPS(model):
   print("Counting number of OPS in model")
   model.summary()
@@ -88,12 +89,6 @@ def doWeights(model,outdir="plots/"):
   plt.xlabel('Weights')
   plt.savefig(outdir+'/%s_weights.pdf'%model.name)
   
-def doProfiling(model,X_test,outdir="plots/"):
-  plt.clf()
-  wp, ap = numerical(keras_model=model, X=X_test[:1000])
-  # plt.show()
-  wp.savefig(outdir+'/%s_profile_weights.pdf'%model.name)
-  ap.savefig(outdir+'/%s_profile_activations.pdf'%model.name)
 
 def getSingleRoc(features_val, labels, labels_val, model):
   predict_test = model.predict(features_val)

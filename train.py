@@ -6,7 +6,7 @@ Author: Thea Aarrestad
 Training of floating point precision and quantized deep convolutional neural networks
 """
 import os
-import setGPU
+#import setGPU
 import numpy as np
 np.random.seed(1337)  # for reproducibility
 import sys, os
@@ -47,7 +47,6 @@ import models
 from utils.utils import getKfoldDataset, preprocess, print_model_sparsity
 from qdictionaries import allQDictionaries
 from utils.callbacks import all_callbacks
-from utils.autoq import runAutoQKeras
 
 flags.DEFINE_boolean('optimize'  , False, 'Run AutoQ')
 flags.DEFINE_boolean('single'    , False, 'Train on one dataset (no kFold)')
@@ -92,17 +91,6 @@ def checkLayerSize(m):
         print("{}: {}".format(layer.name,layersize)) # 0 = weights, 1 = biases
         if (layersize > 4096): # assuming that shape[0] is batch, i.e., 'None'
            print("Layer {} is too large ({}), are you sure you want to train?".format(layer.name,layersize))
-           
-#Moved
-# def runAutoQ(STRATEGY,train_data, val_data, input_shape,train_size):
-#   train_data = train_data.map(preprocess).shuffle(FLAGS.buffersize).batch(FLAGS.batchsize)#.repeat() #see https://www.tensorflow.org/guide/data
-#   val_data   = val_data.map(preprocess).batch(FLAGS.batchsize)
-#   model = getModel("full_autoQ",FLAGS.KerasModel, input_shape)
-#   LOSS        = tf.keras.losses.CategoricalCrossentropy()
-#   OPTIMIZER   = Adam(learning_rate=FLAGS.lr, beta_1=FLAGS.beta_1, beta_2=FLAGS.beta_2, epsilon=FLAGS.epsilon, amsgrad=False)
-#   model.compile(loss=LOSS, optimizer=OPTIMIZER, metrics=["accuracy"])
-#   model.summary()
-#   runAutoQKeras(STRATEGY,train_data,val_data,model)
 
 def pruneFunction(layer):
   # pruning_params = {'pruning_schedule': sparsity.ConstantSparsity(0.75, begin_step=2000, frequency=100)}

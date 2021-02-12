@@ -86,7 +86,7 @@ def getData(dataset):
   
   if dataset.find('svhn')!=-1:
     '''Get the SVHN cropped dataset (32,32,3)'''
-    ds_data, info = tfds.load('svhn_cropped', with_info=True, data_dir='/afs/cern.ch/user/t/thaarres/tensorflow_datasets/') 
+    ds_data, info = tfds.load('svhn_cropped', with_info=True) 
     ds_train, ds_test = ds_data['train'], ds_data['test']
     ds_train = ds_train.map(convert_dataset)    
     # ds_train = ds_train.cache()
@@ -219,7 +219,7 @@ if __name__ == '__main__':
   logging.info(f'Using N steps per epoch N = {steps_per_epoch}')
   
   if useHyperband:
-    outfolder = '/afs/cern.ch/work/t/thaarres/public/kerasTune/HyperBand/%s/'%dataset
+    outfolder = 'HyperBand/%s/'%dataset
     tuner = kt.Hyperband(
           hypermodel=build_model,
           objective='val_accuracy',
@@ -231,7 +231,7 @@ if __name__ == '__main__':
           project_name=pname,
           overwrite=False)
   else:
-    outfolder = '/afs/cern.ch/work/t/thaarres/public/kerasTune/BayOpt/%s/'%dataset
+    outfolder = 'BayOpt/%s/'%dataset
     tuner = kt.BayesianOptimization(
           hypermodel = build_model,
           objective = 'val_accuracy',
@@ -302,6 +302,8 @@ if __name__ == '__main__':
       
     tuner.results_summary()
     logging.info('Get the optimal hyperparameters')
+    
+    
     best_hps = tuner.get_best_hyperparameters(num_trials = 1)[0]
 
     logging.info(f'''
