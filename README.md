@@ -44,12 +44,8 @@ python compareModels.py -m "models/full_0;models/pruned_full_0" --names "BF mode
 
 ### Optimize baseline
 
-This method depends on the kerasTuner (https://www.tensorflow.org/tutorials/keras/keras_tuner)
+Hyperparameter scan using KerasTuner (https://www.tensorflow.org/tutorials/keras/keras_tuner) HyperBand and Bayesian Optimization (!WIP: some functionality has changed and this needs to be fixed (Error: attempt to get argmin of an empty sequence))
 
-```
-pip install -q -U keras-tuner
-```
-Then you can do 
 ```
 python kerasTuner.py 
 ```
