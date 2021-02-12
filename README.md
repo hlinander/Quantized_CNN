@@ -8,7 +8,7 @@ A 10-fold cross validation training and validation is performed and metrics like
 For training you need: Python 3.6, TensorFlow version >= 2.1.0, Keras version: 2.2.4-tf, QKeras (https://github.com/google/qkeras).
 QKeras is a sub-module of this repositry. A conda environment setup file is provided:
 ```
-git clone --recurse-submodules git@github.com:thaarres/Quantized_CNN.git
+git clone --recurse-submodules https://github.com/thaarres/Quantized_CNN.git
 cd Quantized_CNN/
 git submodule update --recursive
 conda env create -f environment.yml
