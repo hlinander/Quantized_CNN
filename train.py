@@ -295,21 +295,6 @@ def train(STRATEGY,train_data_list, val_data_list, test_data, input_shape,train_
           model = pruneModel(model)
         else:
           model = tf.keras.models.load_model('{}/{}'.format(FLAGS.outdir,FLAGS.lmodel),custom_objects={'PruneLowMagnitude': pruning_wrapper.PruneLowMagnitude,'QDense': QDense, 'QConv2D': QConv2D, 'Clip': Clip, 'QActivation': QActivation,'QBatchNormalization':QBatchNormalization,'trial':trial,'score':score})
-          # layers = [l for l in omodel.layers]
-          # x = layers[0].output
-          # for l in range(1, len(layers)):
-          #   if isinstance(layers[l], tf.keras.layers.BatchNormalization):
-          #     x = BatchNormalization()(x)
-          #   elif l >= 18:
-          #     x = QDense(64,kernel_quantizer=quantized_bits(4,0,1,alpha=1.0), bias_quantizer=quantized_bits(4,0,1,alpha=1.0),name='dense_%i'%1, use_bias=False)(x)
-          #     x = BatchNormalization()(x)
-          #     x = QActivation('quantized_relu(32,16)',name='dense_act_%i'%1)(x)
-          #     x = Dense(10,name='output_dense')(x)
-          #     x = Activation('softmax',name='output_softmax')(x)
-          #     break
-          #   else:
-          #     x = layers[l](x)
-          # model = Model(inputs=layers[0].input, outputs=x)
           model._name = '{}_{}'.format(FLAGS.lmodel.replace('/','').replace('.h5',''),i)
           
       else:  
@@ -318,11 +303,6 @@ def train(STRATEGY,train_data_list, val_data_list, test_data, input_shape,train_
         if FLAGS.quantize:
             precision      = [16,14,12,10, 8,6,4,3,2,1]
             getWeightsFrom = [32,16,14,12,10,8,6,4,3,2] 
-          
-            # if i == 2:
-            #   precision      = [2,1]
-            #   getWeightsFrom = [3,2]
-            
           
             for p,w in zip(precision,getWeightsFrom):
               if w == 32:
